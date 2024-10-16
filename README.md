@@ -4,7 +4,7 @@
 <img src="https://img.shields.io/static/v1?label=Java&message=8&color=3776AB&style=for-the-badge&logo=java"/> 
 <img src="http://img.shields.io/static/v1?label=Draw.io&message=24.6.4&color=f08705&style=for-the-badge&logo=diagramsdotnet"/> 
 <img src="http://img.shields.io/static/v1?label=Firebase&message=10.13.0&color=DD2C00&style=for-the-badge&logo=firebase"/> 
-<img src="http://img.shields.io/static/v1?label=MySQL%20MySQL&message=8.0.38&color=4479a1&style=for-the-badge&logo=mysql&logoColor=f5f5f5"/> 
+<img src="http://img.shields.io/static/v1?label=MySQL&message=8.0.38&color=4479a1&style=for-the-badge&logo=mysql&logoColor=f5f5f5"/> 
 <img src="http://img.shields.io/static/v1?label=Hibernate&message=6.6&color=2d3748&style=for-the-badge&logo=hibernate"/> 
 <img src="http://img.shields.io/static/v1?label=Git&message=2.45.2&color=f05032&style=for-the-badge&logo=git"/> 
 <img src="http://img.shields.io/static/v1?label=GitHub&message=2024&color=181717&style=for-the-badge&logo=github"/> 
