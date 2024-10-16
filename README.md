@@ -1,7 +1,7 @@
 <h1>Museu Virtual de Personagens Históricos de Pernambuco</h1> 
 
 <p align="center"> 
-<img src="https://img.shields.io/static/v1?label=Java&message=8&color=3776AB&style=for-the-badge&logo=java"/> 
+<img src="https://img.shields.io/static/v1?label=Java&message=22&color=3776AB&style=for-the-badge&logo=java"/> 
 <img src="http://img.shields.io/static/v1?label=Draw.io&message=24.6.4&color=f08705&style=for-the-badge&logo=diagramsdotnet"/> 
 <img src="http://img.shields.io/static/v1?label=Firebase&message=10.13.0&color=DD2C00&style=for-the-badge&logo=firebase"/> 
 <img src="http://img.shields.io/static/v1?label=MySQL&message=8.0.38&color=4479a1&style=for-the-badge&logo=mysql&logoColor=f5f5f5"/> 
