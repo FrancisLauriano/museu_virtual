@@ -24,6 +24,8 @@
 
 :small_blue_diamond: [Casos de Uso](#casos-de-uso-technologist) :warning:
 
+:small_blue_diamond: [Diagrama de Classes](#Diagrama-de-Classes) :warning:
+
 :small_blue_diamond: [Arquitetura do Backend](#Arquitetura-do-Backend-triangular_ruler-straight_ruler) :warning:
 
 :small_blue_diamond: [Linguagens, tecnologias, dependências e libs utilizadas](#linguagens-tecnologias-dependências-e-libs-utilizadas-hammer_and_wrench-gear-books)
@@ -96,6 +98,11 @@
 **Diagrama de Caso de USO (UC)**
 
 <img src="">
+
+
+
+## Diagrama de Classes
+
 
 
 ## Arquitetura do Backend :triangular_ruler: :straight_ruler:
