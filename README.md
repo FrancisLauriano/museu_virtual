@@ -108,33 +108,42 @@
 ## Arquitetura do Backend :triangular_ruler: :straight_ruler:
 
 ```plaintext
-/museu-virtual-personagens-historicos
+MuseuVirtual/
+├── src/
+│   ├── controller/
+│   │   ├── PersonagemController.java
+│   │   ├── UsuarioController.java
+│   │
+│   ├── dao/
+│   │   ├── PersonagemDAO.java
+│   │   ├── UsuarioDAO.java
+│   │
+│   ├── model/
+│   │   ├── Personagem.java
+│   │   ├── Usuario.java
+│   │
+│   ├── service/
+│   │   ├── FirebaseService.java
+│   │   ├── AuthService.java
+│   │
+│   ├── view/
+│   │   ├── AdminPanel.java
+│   │   ├── LoginView.java
+│   │   ├── ConsultaPersonagemView.java
+│   │
+│   ├── utils/
+│   │   ├── HibernateUtil.java
+│   │   ├── PasswordUtil.java
+│   │
+│   ├── config/
+│   │   └── DatabaseConfig.java
+│   │
+│   └── Main.java
 │
-├── /src
-│   ├── /main
-│   │   ├── /java
-│   │   │   └── /com/museuvirtual
-│   │   │       ├── /controllers
-│   │   │       │   ├── PersonagemController.java
-│   │   │       │   └── UsuarioController.java
-│   │   │       ├── /models
-│   │   │       │   ├── PersonagemHistorico.java
-│   │   │       │   ├── Artista.java
-│   │   │       │   ├── Politico.java
-│   │   │       │   └── Usuario.java
-│   │   │       ├── /repositories
-│   │   │       │   ├── PersonagemRepository.java
-│   │   │       │   └── UsuarioRepository.java
-│   │   │       ├── /views
-│   │   │       │   ├── PersonagemView.java
-│   │   │       │   ├── UsuarioView.java
-│   │   │       │   └── LoginView.java
-│   │   │       ├── /utils
-│   │   │       │   ├── FirebaseUtil.java
-│   │   │       │   └── HibernateUtil.java
-│   │   └── /resources
-│   │       └── META-INF/persistence.xml
-└── /pom.xml
+├── resources/
+│   └── hibernate.cfg.xml
+│
+└── pom.xml (Para gerenciamento com Maven)
 ```
 
 ... 
