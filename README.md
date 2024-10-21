@@ -105,35 +105,35 @@
 
 
 
-## Arquitetura do Backend :triangular_ruler: :straight_ruler:
+## Arquitetura :triangular_ruler: :straight_ruler:
 
 ```plaintext
 MuseuVirtual/
 ├── src/
 │   ├── controller/
 │   │   ├── PersonagemController.java
-│   │   ├── UsuarioController.java
+│   │   └── UsuarioController.java
 │   │
 │   ├── dao/
 │   │   ├── PersonagemDAO.java
-│   │   ├── UsuarioDAO.java
+│   │   └── UsuarioDAO.java
 │   │
 │   ├── model/
 │   │   ├── Personagem.java
-│   │   ├── Usuario.java
+│   │   └── Usuario.java
 │   │
 │   ├── service/
 │   │   ├── FirebaseService.java
-│   │   ├── AuthService.java
+│   │   └── AuthService.java
 │   │
 │   ├── view/
 │   │   ├── AdminPanel.java
 │   │   ├── LoginView.java
-│   │   ├── ConsultaPersonagemView.java
+│   │   └── ConsultaPersonagemView.java
 │   │
 │   ├── utils/
 │   │   ├── HibernateUtil.java
-│   │   ├── PasswordUtil.java
+│   │   └── PasswordUtil.java
 │   │
 │   ├── config/
 │   │   └── DatabaseConfig.java
