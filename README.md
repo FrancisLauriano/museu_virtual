@@ -110,11 +110,16 @@
 ```plaintext
 MuseuVirtual/
 ├── src/
+│   ├── annotations/
+│   │   ├── TipoPersonagem.java
+│   │   └── TipoUsuario.java
+│   │
 │   ├── controller/
 │   │   ├── PersonagemController.java
 │   │   └── UsuarioController.java
 │   │
-│   ├── dao/
+│   ├── DAO/
+│   │   ├── InstanceDAO.java
 │   │   ├── PersonagemDAO.java
 │   │   └── UsuarioDAO.java
 │   │
@@ -123,25 +128,34 @@ MuseuVirtual/
 │   │   └── Usuario.java
 │   │
 │   ├── service/
-│   │   ├── FirebaseService.java
 │   │   └── AuthService.java
 │   │
 │   ├── view/
-│   │   ├── AdminPanel.java
 │   │   ├── LoginView.java
-│   │   └── ConsultaPersonagemView.java
+│   │   ├── AdminPainelView.java
+│   │   ├── AlunoPainelView.java
+│   │   ├── AdicionarUsuarioDialog
+│   │   ├── AdicionarPersonagemDialog.java
+│   │   ├── AdicionarPersonagemDialog.java
+│   │   ├── EditarUsuarioDialog
+│   │   └── EditarPersonagemDialog.java
+│   │
+│   ├── validators/
+│   │   ├── TipoPersonagemValidator.java
+│   │   └── TipoUsuarioValidator.java
 │   │
 │   ├── utils/
 │   │   ├── HibernateUtil.java
+│   │   ├── ImageStorageUtil.java
+|   |   ├── JPAUtils.java
 │   │   └── PasswordUtil.java
 │   │
-│   ├── config/
-│   │   └── DatabaseConfig.java
 │   │
 │   └── Main.java
 │
 ├── resources/
-│   └── hibernate.cfg.xml
+|   └── META-INF/
+│       └── persistence.xml
 │
 └── pom.xml (Para gerenciamento com Maven)
 ```
