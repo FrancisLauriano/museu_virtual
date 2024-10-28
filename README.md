@@ -3,7 +3,6 @@
 <p align="center"> 
 <img src="https://img.shields.io/static/v1?label=Java&message=22&color=3776AB&style=for-the-badge&logo=java"/> 
 <img src="http://img.shields.io/static/v1?label=Draw.io&message=24.6.4&color=f08705&style=for-the-badge&logo=diagramsdotnet"/> 
-<img src="http://img.shields.io/static/v1?label=Firebase&message=10.13.0&color=DD2C00&style=for-the-badge&logo=firebase"/> 
 <img src="http://img.shields.io/static/v1?label=MySQL&message=8.0.38&color=4479a1&style=for-the-badge&logo=mysql&logoColor=f5f5f5"/> 
 <img src="http://img.shields.io/static/v1?label=Hibernate&message=6.6&color=2d3748&style=for-the-badge&logo=hibernate"/> 
 <img src="http://img.shields.io/static/v1?label=Git&message=2.45.2&color=f05032&style=for-the-badge&logo=git"/> 
@@ -71,7 +70,7 @@
 - Administradores realizam login com e-mail e senha. Após o login, são redirecionados para um painel administrativo.
 
 **2. Gestão de Personagens Históricos (CRUD):**
-- Cadastrar Personagem: Inserir nome, biografia, tipo de personagem (Artista ou Político) e imagem. O upload da imagem é realizado no Firebase.
+- Cadastrar Personagem: Inserir nome, biografia, tipo de personagem (Artista ou Político) e imagem.
 - Listar Personagens: Exibir uma lista com todos os personagens cadastrados, incluindo seus detalhes.
 - Atualizar Personagem: Modificar informações já cadastradas, como nome, biografia ou imagem.
 - Deletar Personagem: Remover personagens que não são mais relevantes.
@@ -169,7 +168,6 @@ MuseuVirtual/
 
 - [Java](https://docs.oracle.com/en/java/)
 - [Draw.io](https://www.drawio.com/)
-- [Firebase](https://firebase.google.com/)
 - [MySQL](https://dev.mysql.com/doc/)
 - [Hibernate](https://hibernate.org/orm/)
 - [Git](https://git-scm.com/downloads)
