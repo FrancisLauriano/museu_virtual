@@ -236,22 +236,25 @@ public class AdminPainelView extends JFrame {
             String nome = JOptionPane.showInputDialog("Digite o nome do personagem a ser deletado:").toLowerCase();
             if (nome != null && !nome.trim().isEmpty()) {
                 List<Personagem> personagens = personagemController.buscarPersonagemPorNome(nome);
-                if (personagens != null && personagens.size() == 1) {
-                    Personagem personagem = personagens.get(0);
-                    int confirmacao = JOptionPane.showConfirmDialog(
-                            this, "Confirmar exclusão de: " + personagem.getNome(),
-                            "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
 
-                    if (confirmacao == JOptionPane.YES_OPTION) {
-                        personagemController.deletarPersonagem(personagem.getId());
-                        JOptionPane.showMessageDialog(this, "Personagem excluído.");
+                if (personagens != null && !personagens.isEmpty()) {
+                    if (personagens.size() == 1) {
+                        // Se houver apenas um personagem, procede para exclusão direta
+                        Personagem personagem = personagens.get(0);
+                        confirmarEDeletarPersonagem(personagem);
+                    } else {
+                        // Se houver mais de um personagem, exibe uma lista para escolha
+                        Personagem personagemSelecionado = selecionarPersonagem(personagens);
+                        if (personagemSelecionado != null) {
+                            confirmarEDeletarPersonagem(personagemSelecionado);
+                        }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Personagem não encontrado.");
+                    JOptionPane.showMessageDialog(this, "Personagem não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
-
+        
         adicionarButton.addActionListener(e -> new AdicionarPersonagemDialog(this, personagemController).setVisible(true));
 
         botoesPanel.add(listarButton);
@@ -267,6 +270,20 @@ public class AdminPainelView extends JFrame {
         panel.add(scrollPane, BorderLayout.CENTER);
         panel.add(botoesPanel, BorderLayout.SOUTH);
         return panel;
+    }
+    
+    private void confirmarEDeletarPersonagem(Personagem personagem) {
+        int confirmacao = JOptionPane.showConfirmDialog(
+                this,
+                "Confirmar exclusão de: " + personagem.getNome() + " (" + personagem.getTipo() + ")",
+                "Confirmar Exclusão",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            personagemController.deletarPersonagem(personagem.getId());
+            JOptionPane.showMessageDialog(this, "Personagem excluído.");
+            atualizarTabelaPersonagens(personagemController.listarTodosPersonagens());
+        }
     }
     
     
