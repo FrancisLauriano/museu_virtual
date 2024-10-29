@@ -213,21 +213,24 @@ public class AdminPainelView extends JFrame {
             if (nome != null && !nome.trim().isEmpty()) {
                 List<Personagem> personagens = personagemController.buscarPersonagemPorNome(nome);
 
-                if (personagens != null && personagens.size() == 1) {
-                    Personagem personagem = personagens.get(0);
-                    // Verifica se o personagem é nulo
-                    if (personagem != null) {
+                if (personagens != null && !personagens.isEmpty()) {
+                    if (personagens.size() == 1) {
+                        // Se houver apenas um personagem, abre o diálogo diretamente
+                        Personagem personagem = personagens.get(0);
                         new EditarPersonagemDialog(this, personagemController, personagem).setVisible(true);
                     } else {
-                        JOptionPane.showMessageDialog(this, "Personagem não encontrado.", 
-                                                      "Erro", JOptionPane.ERROR_MESSAGE);
+                        // Se houver mais de um personagem, exibe uma lista para escolha
+                        Personagem personagemSelecionado = selecionarPersonagem(personagens);
+                        if (personagemSelecionado != null) {
+                            new EditarPersonagemDialog(this, personagemController, personagemSelecionado).setVisible(true);
+                        }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Personagem não encontrado ou múltiplos resultados.", 
-                                                  "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Personagem não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
+
         
         deletarButton.addActionListener(e -> {
             String nome = JOptionPane.showInputDialog("Digite o nome do personagem a ser deletado:").toLowerCase();
@@ -264,6 +267,32 @@ public class AdminPainelView extends JFrame {
         panel.add(scrollPane, BorderLayout.CENTER);
         panel.add(botoesPanel, BorderLayout.SOUTH);
         return panel;
+    }
+    
+    
+    private Personagem selecionarPersonagem(List<Personagem> personagens) {
+        String[] opcoes = personagens.stream()
+                .map(p -> p.getId() + " - " + p.getNome() + " (" + p.getTipo() + ")")
+                .toArray(String[]::new);
+
+        String escolha = (String) JOptionPane.showInputDialog(
+                this,
+                "Selecione o personagem:",
+                "Seleção de Personagem",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                opcoes,
+                opcoes[0]);
+
+        if (escolha != null) {
+            // Extrai o ID do personagem da escolha e retorna o correspondente
+            String idEscolhido = escolha.split(" - ")[0];
+            return personagens.stream()
+                    .filter(p -> p.getId().toString().equals(idEscolhido))
+                    .findFirst()
+                    .orElse(null);
+        }
+        return null;
     }
     
     //lista por tipo
