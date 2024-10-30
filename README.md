@@ -21,7 +21,7 @@
 
 :small_blue_diamond: [Funcionalidades](#funcionalidades-video_game) :heavy_check_mark:
 
-:small_blue_diamond: [Casos de Uso](#casos-de-uso-technologist) :warning:
+:small_blue_diamond: [Casos de Uso](#casos-de-uso-technologist) :heavy_check_mark:
 
 :small_blue_diamond: [Diagrama de Classes](#Diagrama-de-Classes) :heavy_check_mark:
 
@@ -96,9 +96,10 @@
 
 **Diagrama de Caso de USO (UC)**
 
-<img src="">
+<img src="/diagramacao/DiagramaDeCasosDeUsoMuseuVirtual.png">
 
 
+...
 
 ## Diagrama de Classes
 

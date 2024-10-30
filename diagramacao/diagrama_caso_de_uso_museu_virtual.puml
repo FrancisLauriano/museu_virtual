@@ -1,0 +1,56 @@
+@startuml DiagramaDeCasosDeUso
+
+actor Admin as "Administrador"
+actor Aluno as "Aluno"
+
+usecase "Login" as UC_Login
+usecase "Painel de Administrador" as UC_PainelAdmin
+usecase "Gestão de Personagens" as UC_AbaPersonagem
+usecase "Cadastrar Personagem" as UC_CadastrarPersonagem
+usecase "Buscar Personagem" as UC_BuscarPersonagem
+usecase "Listar Personagens" as UC_ListarPersonagens
+usecase "Listar Personagens por Tipo" as UC_ListarPersonagensTipo
+usecase "Atualizar Personagem" as UC_AtualizarPersonagem
+usecase "Deletar Personagem" as UC_DeletarPersonagem
+
+usecase "Gestão de Usuários" as UC_AbaUsuarios
+usecase "Cadastrar Usuário" as UC_CadastrarUsuario
+usecase "Buscar Usuário" as UC_BuscarUsuario
+usecase "Listar Usuários" as UC_ListarUsuarios
+usecase "Listar Usuários por Tipo" as UC_ListarUsuariosTipo
+usecase "Atualizar Usuário" as UC_AtualizarUsuario
+usecase "Deletar Usuário" as UC_DeletarUsuario
+
+usecase "Painel de Aluno" as UC_PainelAluno
+usecase "Pesquisa de Personagens" as UC_InterfacePesquisaPersonagem
+
+
+
+Admin --> UC_Login
+UC_Login --> UC_PainelAdmin
+UC_PainelAdmin --> UC_AbaUsuarios
+UC_AbaUsuarios --> UC_CadastrarUsuario
+UC_AbaUsuarios --> UC_ListarUsuarios
+UC_AbaUsuarios --> UC_ListarUsuariosTipo
+UC_AbaUsuarios --> UC_BuscarUsuario
+UC_AbaUsuarios --> UC_AtualizarUsuario
+UC_AbaUsuarios --> UC_DeletarUsuario
+
+
+UC_PainelAdmin --> UC_AbaPersonagem
+UC_AbaPersonagem --> UC_CadastrarPersonagem
+UC_AbaPersonagem --> UC_ListarPersonagens
+UC_AbaPersonagem --> UC_ListarPersonagensTipo
+UC_AbaPersonagem --> UC_BuscarPersonagem
+UC_AbaPersonagem --> UC_AtualizarPersonagem
+UC_AbaPersonagem --> UC_DeletarPersonagem
+
+
+Aluno --> UC_Login
+UC_Login --> UC_PainelAluno
+UC_PainelAluno --> UC_InterfacePesquisaPersonagem
+UC_InterfacePesquisaPersonagem --> UC_ListarPersonagens
+UC_InterfacePesquisaPersonagem --> UC_ListarPersonagensTipo
+UC_InterfacePesquisaPersonagem--> UC_BuscarPersonagem
+
+@enduml
