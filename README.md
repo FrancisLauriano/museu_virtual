@@ -21,11 +21,14 @@
 
 :small_blue_diamond: [Funcionalidades](#funcionalidades-video_game) :heavy_check_mark:
 
-:small_blue_diamond: [Casos de Uso](#casos-de-uso-technologist) :heavy_check_mark:
+:small_blue_diamond: [Arquitetura do Backend](#Arquitetura-do-Backend-triangular_ruler-straight_ruler) :heavy_check_mark:
 
 :small_blue_diamond: [Diagrama de Classes](#Diagrama-de-Classes) :heavy_check_mark:
 
-:small_blue_diamond: [Arquitetura do Backend](#Arquitetura-do-Backend-triangular_ruler-straight_ruler) :heavy_check_mark:
+:small_blue_diamond: [Casos de Uso](#diagrama-de-casos-de-uso-(UC)-technologist) :heavy_check_mark:
+
+:small_blue_diamond: [Descrição das Telas do Sistema](#Descrição-das-Telas-do-Sistema-art) :heavy_check_mark:
+
 
 :small_blue_diamond: [Linguagens, tecnologias, dependências e libs utilizadas](#linguagens-tecnologias-dependências-e-libs-utilizadas-hammer_and_wrench-gear-books)
 
@@ -92,20 +95,6 @@
 
 
 
-## Casos de Uso :technologist:
-
-**Diagrama de Caso de USO (UC)**
-
-<img src="/diagramacao/DiagramaDeCasosDeUsoMuseuVirtual.png">
-
-
-...
-
-## Diagrama de Classes
-
-<img src="/diagramacao/DiagramaDeClassesMuseuVirtual.png">
-
-
 ## Arquitetura :triangular_ruler: :straight_ruler:
 
 ```plaintext
@@ -161,9 +150,109 @@ MuseuVirtual/
 └── pom.xml (Para gerenciamento com Maven)
 ```
 
+...
+
+## Diagrama de Classes
+
+
+<img src="/diagramacao/DiagramaDeClassesMuseuVirtual.png">
+
+
+...
+
+## Diagrama de Casos de Uso (UC) :technologist:
+
+
+<img src="/diagramacao/DiagramaDeCasosDeUsoMuseuVirtual.png">
+
+
+
+## Descrição das Telas do Sistema :art:
+1. Tela de Login
+- Descrição:
+  - O usuário (aluno ou administrador) acessa esta tela para entrar no sistema.
+  - Os campos incluem:
+  - Email: Campo de texto para o e-mail.
+  - Senha: Campo oculto para senha.
+  - Botão "Login": Inicia o processo de autenticação.
+
+- Interação:
+  1. O usuário insere email e senha.
+  2. Ao clicar no botão "Login", é feita a validação:
+  - Se o login for bem-sucedido:
+    - Administrador é redirecionado para o Painel Administrativo.
+    - Aluno é direcionado para a Tela de Consulta de Personagens.
+  - Se falhar, é exibida uma mensagem de erro informando "Email ou senha incorretos".
+
+2. Painel Administrativo
+- Descrição:
+  - Esta tela é exclusiva para administradores e permite gerenciar usuários e personagens.
+  - Há um banner de boas-vindas e abas para facilitar a navegação:
+    - Aba "Usuários": Gerenciamento completo de usuários (CRUD).
+    - Aba "Personagens": Gerenciamento de personagens históricos (CRUD).
+  
+- Interação:
+  1. Aba "Usuários":
+    - Listar todos os usuários, buscar por email, editar, excluir ou adicionar um novo usuário.
+    - A escolha do tipo de usuário pode ser feita em um diálogo específico.
+  2. Aba "Personagens":
+    - Listar personagens, buscar por nome, adicionar, editar ou excluir personagens existentes.
+  3. Botão "Sair" no canto superior direito permite que o administrador faça logout e volte para a tela de login.
+  
+3. Painel do Aluno
+- Descrição:
+  - Esta tela é destinada aos alunos para consultar os personagens históricos cadastrados.
+  - Contém um banner com boas-vindas e uma aba para listar e buscar personagens.
+
+- Interação:
+  1. Botões de Ação:
+    - Listar Personagens: Exibe todos os personagens no sistema.
+    - Listar por Tipo: Abre um diálogo para o aluno escolher um tipo e listar os personagens correspondentes.
+    - Buscar Personagem: Permite ao aluno buscar um personagem específico pelo nome.
+  2. Tabela: Exibe os detalhes dos personagens encontrados.
+
+4. Tela de Adicionar Personagem
+- Descrição:
+  - Permite que o administrador adicione um novo personagem ao sistema, inserindo:
+    - Nome, Biografia, Tipo, e Imagem.
+
+- Interação:
+  1. O administrador preenche os campos obrigatórios.
+  2. A imagem pode ser selecionada através de um selecionador de arquivos com visualização em miniatura.
+  3. Ao clicar em "Adicionar", o personagem é salvo no sistema.
+
+5. Tela de Editar Personagem
+- Descrição:
+  - Permite editar informações de um personagem existente.
+
+- Interação:
+  1. O administrador pode modificar nome, biografia, tipo e imagem.
+  2. Após salvar, o sistema atualiza o personagem e exibe uma mensagem de confirmação.
+
+6. Tela de Adicionar Usuário
+- Descrição:
+  - Permite cadastrar novos usuários, definindo:
+    - Nome, Email, Senha, e Tipo (administrador ou aluno).
+
+- Interação:
+  1. O administrador insere os dados necessários e salva o novo usuário.
+  2. Caso o email já esteja em uso, uma mensagem de erro é exibida.
+
+7. Tela de Editar Usuário
+- Descrição:
+  - Permite atualizar as informações de um usuário existente.
+
+- Interação:
+  1. O administrador modifica os dados e salva as alterações.
+  2. Se um novo email for inserido e já estiver em uso, o sistema exibe uma mensagem de erro.
+
+**Fluxo Geral de Interação:**
+  1. Usuário realiza login.
+  2. Administrador acessa o painel com abas para gerenciar usuários e personagens.
+  3. Aluno acessa a tela de consulta para listar ou buscar personagens.
+  4. A partir das interfaces administrativas, personagens e usuários podem ser criados, atualizados, ou excluídos.
+
 ... 
-
-
 
 ## Linguagens, tecnologias, dependências e libs utilizadas :hammer_and_wrench: :gear: :books:
 
