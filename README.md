@@ -23,9 +23,9 @@
 
 :small_blue_diamond: [Casos de Uso](#casos-de-uso-technologist) :warning:
 
-:small_blue_diamond: [Diagrama de Classes](#Diagrama-de-Classes) :warning:
+:small_blue_diamond: [Diagrama de Classes](#Diagrama-de-Classes) :heavy_check_mark:
 
-:small_blue_diamond: [Arquitetura do Backend](#Arquitetura-do-Backend-triangular_ruler-straight_ruler) :warning:
+:small_blue_diamond: [Arquitetura do Backend](#Arquitetura-do-Backend-triangular_ruler-straight_ruler) :heavy_check_mark:
 
 :small_blue_diamond: [Linguagens, tecnologias, dependências e libs utilizadas](#linguagens-tecnologias-dependências-e-libs-utilizadas-hammer_and_wrench-gear-books)
 
@@ -102,6 +102,7 @@
 
 ## Diagrama de Classes
 
+<img src="/diagramacao/DiagramaDeClassesMuseuVirtual.png">
 
 
 ## Arquitetura :triangular_ruler: :straight_ruler:
@@ -170,6 +171,8 @@ MuseuVirtual/
 - [Draw.io](https://www.drawio.com/)
 - [MySQL](https://dev.mysql.com/doc/)
 - [Hibernate](https://hibernate.org/orm/)
+- [Jakarta](https://jakarta.ee/learn/docs/jakartaee-tutorial/current/index.html)
+- [Javax Swing](https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html)
 - [Git](https://git-scm.com/downloads)
 - [GitHub](https://github.com/)
 

@@ -1,0 +1,119 @@
+@startuml DiagramaDeClassesMuseuVirtual
+
+class LoginView {
+    - emailField: JTextField
+    - senhaField: JPasswordField
+    + realizarLogin(): void
+    + limparCampos(): void
+}
+
+class AdminPainelView {
+    - tabelaUsuarios: JTable
+    - tabelaPersonagens: JTable
+    + criarPainelUsuarios(): JPanel
+    + criarPainelPersonagens(): JPanel
+    + atualizarTabela(): void
+}
+
+class AlunoPainelView {
+    - tabelaPersonagens: JTable
+    + criarPainelPersonagens(): JPanel
+    + atualizarTabelaPersonagens(): void
+}
+
+class AdicionarPersonagemDialog {
+    - nomeField: JTextField
+    - biografiaField: JTextField
+    - tipoComboBox: JComboBox
+    - imagemUrlField: JTextField
+    + selecionarImagem(): void
+    + adicionarPersonagem(): void
+}
+
+class EditarPersonagemDialog {
+    - nomeField: JTextField
+    - biografiaField: JTextField
+    + salvarAlteracoes(): void
+}
+
+class AdicionarUsuarioDialog {
+    - nomeField: JTextField
+    - emailField: JTextField
+    - senhaField: JPasswordField
+    - tipoUsuarioComboBox: JComboBox
+    + salvarUsuario(): void
+}
+
+class EditarUsuarioDialog {
+    - nomeField: JTextField
+    - emailField: JTextField
+    - senhaField: JPasswordField
+    - tipoUsuarioBox: JComboBox
+    + salvarUsuario(): void
+}
+
+class UsuarioController {
+    + listarTodosUsuarios(): List<Usuario>
+    + buscarUsuarioPorEmail(email: String): Usuario
+    + adicionarUsuario(nome: String, email: String, senha: String, tipoUsuario: String): void
+}
+
+class PersonagemController {
+    + listarTodosPersonagens(): List<Personagem>
+    + buscarPersonagemPorNome(nome: String): List<Personagem>
+    + adicionarPersonagem(nome: String, biografia: String, tipo: String, imagem: InputStream): void
+}
+
+abstract class InstanceDAO<T> {
+    + save(entity: T): void
+    + findById(id: Long, entityClass: Class<T>): T
+    + findAll(jpql: String, entityClass: Class<T>): List<T>
+    + findWithParameter(jpql: String, entityClass: Class<T>, paramName: String, paramValue: Object): List<T>
+    + update(entity: T): void
+    + delete(entity: T): void
+}
+
+class UsuarioDAO {
+    + save(usuario: Usuario): void
+    + findById(id: Long): Usuario
+    + findAll(): List<Usuario>
+}
+
+class PersonagemDAO {
+    + save(personagem: Personagem): void
+    + findById(id: Long): Personagem
+    + findAll(): List<Personagem>
+}
+
+class Usuario {
+    - id: Long
+    - nome: String
+    - email: String
+    - senha: String
+    - tipoUsuario: String
+}
+
+class Personagem {
+    - id: Long
+    - nome: String
+    - biografia: String
+    - tipo: String
+    - imagemUrl: String
+}
+
+LoginView --> UsuarioController : "Dependência"
+AdminPainelView --> UsuarioController : "Dependência"
+AlunoPainelView --> PersonagemController : "Dependência"
+AdicionarUsuarioDialog --> UsuarioController : "Dependência"
+EditarUsuarioDialog --> UsuarioController : "Dependência"
+AdicionarPersonagemDialog --> PersonagemController : "Dependência"
+EditarPersonagemDialog --> PersonagemController : "Dependência"
+UsuarioController *-- UsuarioDAO : "Composição"
+PersonagemController *-- PersonagemDAO : "Composição"
+InstanceDAO <|-- UsuarioDAO : "Extensão"
+InstanceDAO <|-- PersonagemDAO : "Extensão"
+UsuarioDAO o-- Usuario  : "Agregação"
+PersonagemDAO o-- Personagem : "Agregação"
+
+
+@enduml
