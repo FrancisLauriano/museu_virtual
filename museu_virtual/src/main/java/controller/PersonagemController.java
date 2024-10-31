@@ -7,10 +7,11 @@ import model.Personagem;
 import java.util.Arrays;
 
 import java.util.List;
-import utils.ImageStorageUtil;
+
+import service.FirebaseService;
 
 public class PersonagemController {
-
+    
     private final PersonagemDAO personagemDAO;
     private static final List<String> FORMATOS_SUPORTADOS = Arrays.asList("jpg", "jpeg", "png");
     
@@ -37,7 +38,6 @@ public class PersonagemController {
                 throw new IllegalArgumentException("Já existe um personagem com o mesmo nome e tipo.");
             }
 
-            //  upload da imagem (se fornecida)
             String imagemUrl = salvarImagemSeForValida(imagemStream, imagemNome);
 
             Personagem personagem = new Personagem(nome, biografia, tipo, imagemUrl != null ? imagemUrl : "");
@@ -142,11 +142,11 @@ public class PersonagemController {
             if (!isFormatoValido(imagemNome)) {
                 throw new IllegalArgumentException("Formato de imagem não suportado. Use JPG, JPEG ou PNG.");
             }
-            return ImageStorageUtil.saveImage(imagemNome, imagemStream);
+            return FirebaseService.uploadImage(imagemNome, imagemStream);
         }
-        return null; 
+        return null;
     }
-
+    
     private String validarEntradaObrigatoria(String entrada, String campo) {
         if (entrada == null || entrada.trim().isEmpty()) {
             throw new IllegalArgumentException("O campo '" + campo + "' é obrigatório e não pode ser vazio.");

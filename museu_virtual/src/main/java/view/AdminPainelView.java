@@ -8,8 +8,12 @@ import javax.swing.*;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 //import java.io.File;
 import java.util.List;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 
 public class AdminPainelView extends JFrame {
@@ -381,17 +385,18 @@ public class AdminPainelView extends JFrame {
     
     private ImageIcon carregarImagem(String caminhoImagem) {
         if (caminhoImagem == null || caminhoImagem.isEmpty()) {
-            return null;
+            return new ImageIcon("path/to/default_image.png"); 
         }
         try {
-            ImageIcon imagemIcon = new ImageIcon(caminhoImagem);
+            ImageIcon imagemIcon = new ImageIcon(new URL(caminhoImagem));  
             Image imagem = imagemIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
             return new ImageIcon(imagem);
-        } catch (Exception e) {
+        } catch (MalformedURLException e) {
             System.err.println("Erro ao carregar imagem: " + e.getMessage());
-            return null;
+            return new ImageIcon("path/to/default_image.png"); 
         }
     }
+
     
     class ImageRenderer extends DefaultTableCellRenderer {
         @Override
