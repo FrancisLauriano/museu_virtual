@@ -260,6 +260,7 @@ MuseuVirtual/
 
 - [Java](https://docs.oracle.com/en/java/)
 - [Draw.io](https://www.drawio.com/)
+- [PlantUML](https://plantuml.com/)
 - [MySQL](https://dev.mysql.com/doc/)
 - [Hibernate ORM](https://hibernate.org/orm/)
 - [Firebase](https://firebase.google.com/)
