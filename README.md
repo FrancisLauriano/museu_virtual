@@ -151,6 +151,44 @@ MuseuVirtual/
 └── pom.xml (Para gerenciamento com Maven)
 ```
 
+1. MuseuVirtual/: Diretório raiz do projeto.
+   - src/: Contém o código-fonte do sistema.
+    - annotations/:
+      - TipoPersonagem.java e TipoUsuario.java: Definem anotações personalizadas para marcar e validar tipos de personagens e tipos de usuários. Essas anotações ajudam na validação e controle de dados específicos do sistema.
+  
+    - controller/:
+      - PersonagemController.java e UsuarioController.java: Controladores que implementam a lógica de negócios e intermediam a comunicação entre a interface gráfica (view) e as operações de banco de dados (DAO). Por exemplo, o PersonagemController coordena as operações CRUD para personagens, e o UsuarioController para usuários.
+  
+    - DAO/ (Data Access Object):
+      - InstanceDAO.java: Classe base genérica para operações de banco de dados, contendo métodos comuns como salvar, buscar por ID, listar, atualizar e deletar. Serve como base para outras DAOs.
+      - PersonagemDAO.java e UsuarioDAO.java: Classes DAO específicas para as entidades Personagem e Usuario, estendendo InstanceDAO para fornecer métodos CRUD e consultas específicas.
+
+    - model/:
+      - Personagem.java e Usuario.java: Entidades que representam os modelos de dados do sistema. Essas classes mapeiam os atributos e relacionamentos das tabelas Personagem e Usuario no banco de dados.
+
+    - service/:
+      - AuthService.java: Implementa a autenticação de usuários, possivelmente manipulando tokens de sessão.
+      - FirebaseService.java: Gerencia operações de integração com o Firebase, como o upload de imagens ou armazenamento de dados.
+  
+    - view/:
+      - LoginView.java: Tela de login, onde administradores e alunos inserem suas credenciais.
+      - AdminPainelView.java e AlunoPainelView.java: Painéis específicos para administradores e alunos, exibindo funcionalidades e informações conforme o perfil de usuário.
+      - AdicionarUsuarioDialog.java, AdicionarPersonagemDialog.java, EditarUsuarioDialog.java, EditarPersonagemDialog.java: Diálogos específicos para gerenciar operações de cadastro e edição de personagens e usuários.
+  
+    - validators/:
+      - TipoPersonagemValidator.java e TipoUsuarioValidator.java: Validadores responsáveis por garantir que os dados de tipos de personagens e usuários estejam corretos conforme a definição do sistema.
+  
+    - utils/:
+      - HibernateUtil.java e JPAUtils.java: Utilitários de configuração e inicialização para o gerenciamento de persistência com Hibernate e JPA.
+      - PasswordUtil.java: Funções auxiliares para lidar com senhas, como hashing e validação.
+
+    - Main.java: Ponto de entrada da aplicação. Inicia o sistema e exibe a primeira tela (provavelmente o login).
+
+2. resources/:
+  - META-INF/persistence.xml: Arquivo de configuração de persistência para o JPA/Hibernate. Define as propriedades do banco de dados e mapeamento de entidades.
+  
+3. pom.xml: Arquivo de configuração do Maven, listando dependências e plugins necessários para construir e executar o projeto, facilitando o gerenciamento de bibliotecas e configurações de build.
+
 ...
 
 ## Diagrama de Classes
