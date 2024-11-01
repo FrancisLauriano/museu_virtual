@@ -111,6 +111,7 @@ public class LoginView extends JFrame {
                 JOptionPane.showMessageDialog(this,
                         "Email ou senha incorretos!",
                         "Erro", JOptionPane.ERROR_MESSAGE);
+                limparCampos(); 
             }
         } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this,
@@ -118,6 +119,12 @@ public class LoginView extends JFrame {
                     "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    private void limparCampos() {
+        emailField.setText("");
+        senhaField.setText("");
+    }
+
 
     //public static void main(String[] args) {
        // SwingUtilities.invokeLater(() -> new LoginView().setVisible(true));
