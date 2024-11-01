@@ -5,6 +5,7 @@
 <img src="http://img.shields.io/static/v1?label=Draw.io&message=24.6.4&color=f08705&style=for-the-badge&logo=diagramsdotnet"/> 
 <img src="http://img.shields.io/static/v1?label=MySQL&message=8.0.38&color=4479a1&style=for-the-badge&logo=mysql&logoColor=f5f5f5"/> 
 <img src="http://img.shields.io/static/v1?label=Hibernate&message=6.6&color=2d3748&style=for-the-badge&logo=hibernate"/> 
+<img src="http://img.shields.io/static/v1?label=Firebase&message=10.13.0&color=DD2C00&style=for-the-badge&logo=firebase"/>
 <img src="http://img.shields.io/static/v1?label=Git&message=2.45.2&color=f05032&style=for-the-badge&logo=git"/> 
 <img src="http://img.shields.io/static/v1?label=GitHub&message=2024&color=181717&style=for-the-badge&logo=github"/> 
 <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=yellow&style=for-the-badge"/> 
@@ -118,7 +119,8 @@ MuseuVirtual/
 │   │   └── Usuario.java
 │   │
 │   ├── service/
-│   │   └── AuthService.java
+│   │   ├── AuthService.java
+│   │   └── FirebaseService.java
 │   │
 │   ├── view/
 │   │   ├── LoginView.java
@@ -136,7 +138,6 @@ MuseuVirtual/
 │   │
 │   ├── utils/
 │   │   ├── HibernateUtil.java
-│   │   ├── ImageStorageUtil.java
 |   |   ├── JPAUtils.java
 │   │   └── PasswordUtil.java
 │   │
@@ -261,6 +262,7 @@ MuseuVirtual/
 - [Draw.io](https://www.drawio.com/)
 - [MySQL](https://dev.mysql.com/doc/)
 - [Hibernate](https://hibernate.org/orm/)
+- [Firebase](https://firebase.google.com/)
 - [Jakarta](https://jakarta.ee/learn/docs/jakartaee-tutorial/current/index.html)
 - [Javax Swing](https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html)
 - [Git](https://git-scm.com/downloads)
