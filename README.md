@@ -194,7 +194,7 @@ MuseuVirtual/
 ## Diagrama de Classes
 
 
-<img src="/diagramacao/DiagramaDeClassesMuseuVirtual.png">
+<img src="/diagramas_UML/DiagramaDeClassesMuseuVirtual.png">
 
 
 ...
@@ -202,7 +202,7 @@ MuseuVirtual/
 ## Diagrama de Casos de Uso (UC) :technologist:
 
 
-<img src="/diagramacao/DiagramaDeCasosDeUsoMuseuVirtual.png">
+<img src="/diagramas_UML/DiagramaDeCasosDeUsoMuseuVirtual.png">
 
 
 
