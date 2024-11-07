@@ -6,7 +6,10 @@ import model.Personagem;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.*;
 import java.awt.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
+import javax.swing.table.TableCellRenderer;
 
 public class AlunoPainelView extends JFrame {
 
@@ -98,9 +101,7 @@ public class AlunoPainelView extends JFrame {
         return panel;
     }
     
-    //lista por tipo
     private void abrirDialogoEscolherTipo() {
-        // lista de tipos disponíveis
         String[] tiposDisponiveis = {
             "artista_plastico", "artista_popular", "escritor", 
             "politico", "governante", "cientista", 
@@ -147,23 +148,53 @@ public class AlunoPainelView extends JFrame {
 
         tabelaPersonagens.setModel(new javax.swing.table.DefaultTableModel(dados, colunas));
         tabelaPersonagens.getColumnModel().getColumn(4).setCellRenderer(new ImageRenderer());
-        tabelaPersonagens.setRowHeight(100); 
+        tabelaPersonagens.getColumnModel().getColumn(2).setCellRenderer(new TextAreaRenderer());
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tabelaPersonagens.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tabelaPersonagens.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+        tabelaPersonagens.setRowHeight(200);
     }
     
+    class TextAreaRenderer extends JTextArea implements TableCellRenderer {
+
+        public TextAreaRenderer() {
+            setLineWrap(true);
+            setWrapStyleWord(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText(value != null ? value.toString() : "");
+            setSize(table.getColumnModel().getColumn(column).getWidth(), getPreferredSize().height);
+
+            int preferredHeight = getPreferredSize().height;
+            int rowHeight = Math.max(preferredHeight, 200);
+
+            if (table.getRowHeight(row) != rowHeight) {
+                table.setRowHeight(row, rowHeight);
+            }
+
+            return this;
+        }
+    }
+
     private ImageIcon carregarImagem(String caminhoImagem) {
         if (caminhoImagem == null || caminhoImagem.isEmpty()) {
-            return null;
+            return new ImageIcon("path/to/default_image.png"); 
         }
         try {
-            ImageIcon imagemIcon = new ImageIcon(caminhoImagem);
-            Image imagem = imagemIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            ImageIcon imagemIcon = new ImageIcon(new URL(caminhoImagem));  
+            Image imagem = imagemIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
             return new ImageIcon(imagem);
-        } catch (Exception e) {
+        } catch (MalformedURLException e) {
             System.err.println("Erro ao carregar imagem: " + e.getMessage());
-            return null;
+            return new ImageIcon("path/to/default_image.png"); 
         }
     }
-    
+
     class ImageRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(
@@ -174,6 +205,7 @@ public class AlunoPainelView extends JFrame {
             return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         }
     }
+    
 
     private void sair() {
         dispose();

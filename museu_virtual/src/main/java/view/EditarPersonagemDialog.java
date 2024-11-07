@@ -8,6 +8,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class EditarPersonagemDialog extends JDialog {
 
@@ -17,10 +19,8 @@ public class EditarPersonagemDialog extends JDialog {
     private JTextField nomeField;
     private JTextField biografiaField;
     private JComboBox<String> tipoComboBox;  
-    private JTextField imagemUrlField;
     private File imagemSelecionada;  
     private JLabel imagemPreviewLabel; 
-
 
     private static final String[] TIPOS_PERSONAGEM = {
         "artista_plastico", "artista_popular", "escritor",
@@ -38,11 +38,11 @@ public class EditarPersonagemDialog extends JDialog {
         setSize(500, 400);
         setLocationRelativeTo(parent);
         initUI();
-        carregarImagemPreview(new File(personagem.getImagemUrl())); 
+        carregarImagemPreview(personagem.getImagemUrl()); 
     }
 
     private void initUI() {
-        setLayout(new GridLayout(6, 2));
+        setLayout(new GridLayout(5, 2));
 
         JLabel nomeLabel = new JLabel("Nome:");
         nomeField = new JTextField(personagem.getNome() != null ? personagem.getNome() : "");
@@ -54,17 +54,10 @@ public class EditarPersonagemDialog extends JDialog {
         tipoComboBox = new JComboBox<>(TIPOS_PERSONAGEM);
         tipoComboBox.setSelectedItem(personagem.getTipo() != null ? personagem.getTipo() : "");
 
-        JLabel imagemUrlLabel = new JLabel("Caminho da Imagem:");
-        imagemUrlField = new JTextField(personagem.getImagemUrl() != null ? personagem.getImagemUrl() : "");
-        imagemUrlField.setEditable(false);  
-
         imagemPreviewLabel = new JLabel();  
         imagemPreviewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         imagemPreviewLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        if (personagem.getImagemUrl() != null && !personagem.getImagemUrl().isEmpty()) {
-            carregarImagemPreview(new File(personagem.getImagemUrl()));
-        }
+        imagemPreviewLabel.setPreferredSize(new Dimension(100, 100)); // Tamanho da pré-visualização
 
         JButton selecionarImagemButton = new JButton("Selecionar Imagem");
         selecionarImagemButton.addActionListener(e -> selecionarImagem());
@@ -78,8 +71,6 @@ public class EditarPersonagemDialog extends JDialog {
         add(biografiaField);
         add(tipoLabel);
         add(tipoComboBox);
-        add(imagemUrlLabel);
-        add(imagemUrlField);
         add(new JLabel("Pré-visualização:"));
         add(imagemPreviewLabel);
         add(selecionarImagemButton);
@@ -96,17 +87,24 @@ public class EditarPersonagemDialog extends JDialog {
 
         if (resultado == JFileChooser.APPROVE_OPTION) {
             imagemSelecionada = fileChooser.getSelectedFile();
-            imagemUrlField.setText(imagemSelecionada.getAbsolutePath());
-            carregarImagemPreview(imagemSelecionada); 
+            carregarImagemPreview(imagemSelecionada.getAbsolutePath()); 
         }
     }
-    
-    private void carregarImagemPreview(File imagemFile) {
+
+    private void carregarImagemPreview(String imagemUrl) {
         try {
-            ImageIcon imagemIcon = new ImageIcon(imagemFile.getAbsolutePath());
-            Image imagem = imagemIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+            ImageIcon imagemIcon;
+            if (imagemSelecionada != null) {
+                imagemIcon = new ImageIcon(imagemSelecionada.getAbsolutePath());
+            } else if (imagemUrl != null && !imagemUrl.isEmpty()) {
+                imagemIcon = new ImageIcon(new URL(imagemUrl));
+            } else {
+                imagemIcon = new ImageIcon("path/to/default_image.png"); 
+            }
+            
+            Image imagem = imagemIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
             imagemPreviewLabel.setIcon(new ImageIcon(imagem));
-        } catch (Exception e) {
+        } catch (MalformedURLException e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar a imagem: " + e.getMessage(),
                     "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -116,7 +114,6 @@ public class EditarPersonagemDialog extends JDialog {
         String novoNome = nomeField.getText().trim();
         String biografia = biografiaField.getText().trim();
         String tipo = (String) tipoComboBox.getSelectedItem();  
-        String imagemUrl = personagem.getImagemUrl();  
         
         if (novoNome.isEmpty() || biografia.isEmpty() || tipo == null) {
             JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.",

@@ -7,14 +7,15 @@ import model.Personagem;
 import javax.swing.*;
 
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.JTextArea;
 import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-//import java.io.File;
 import java.util.List;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 
 public class AdminPainelView extends JFrame {
 
@@ -46,10 +47,8 @@ public class AdminPainelView extends JFrame {
         );
         banner.setFont(new Font("Serif", Font.BOLD, 20));
         banner.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        //banner.setOpaque(false);  
 
         JPanel sairButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        //sairButtonPanel.setBackground(new Color(173, 216, 230)); 
         sairButtonPanel.setOpaque(false); 
         JButton sairButton = new JButton("Sair");
         sairButton.addActionListener(e -> sair());
@@ -61,9 +60,6 @@ public class AdminPainelView extends JFrame {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Usuários", criarPainelUsuarios());
         tabbedPane.addTab("Personagens", criarPainelPersonagens());
-
-        //add(topPanel, BorderLayout.NORTH);
-        //add(tabbedPane, BorderLayout.CENTER);
         
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(tabbedPane, BorderLayout.CENTER);
@@ -78,7 +74,6 @@ public class AdminPainelView extends JFrame {
         JPanel botoesPanel = new JPanel(new GridLayout(1, 5));
         botoesPanel.setOpaque(false);
         
-        
         JButton listarButton = new JButton("Listar Usuários");
         JButton listarPorTipoButton = new JButton("Listar por Tipo");
         JButton buscarButton = new JButton("Buscar Usuário");
@@ -87,7 +82,6 @@ public class AdminPainelView extends JFrame {
         JButton adicionarButton = new JButton("Adicionar Usuário");
 
         listarButton.addActionListener(e -> atualizarTabelaUsuarios(usuarioController.listarTodosUsuarios()));
-
         listarPorTipoButton.addActionListener(e -> abrirDialogoEscolherTipoUsuario());
         
         buscarButton.addActionListener(e -> {
@@ -153,7 +147,6 @@ public class AdminPainelView extends JFrame {
     }
     
     private void abrirDialogoEscolherTipoUsuario() {
-        // lista de tipos disponíveis
         String[] tiposUsuarios = {"administrador", "aluno"};
 
         JComboBox<String> tipoComboBox = new JComboBox<>(tiposUsuarios);
@@ -194,7 +187,6 @@ public class AdminPainelView extends JFrame {
         JButton adicionarButton = new JButton("Adicionar Personagem");
 
         listarButton.addActionListener(e -> atualizarTabelaPersonagens(personagemController.listarTodosPersonagens()));
-
         listarPorTipoButton.addActionListener(e -> abrirDialogoEscolherTipo());
         
         buscarButton.addActionListener(e -> {
@@ -209,21 +201,15 @@ public class AdminPainelView extends JFrame {
             }
         });
         
-        listarButton.addActionListener(e -> atualizarTabelaPersonagens(personagemController.listarTodosPersonagens()));
-
         editarButton.addActionListener(e -> {
             String nome = JOptionPane.showInputDialog("Digite o nome do personagem a ser editado:").toLowerCase();
-
             if (nome != null && !nome.trim().isEmpty()) {
                 List<Personagem> personagens = personagemController.buscarPersonagemPorNome(nome);
-
                 if (personagens != null && !personagens.isEmpty()) {
                     if (personagens.size() == 1) {
-                        // Se houver apenas um personagem, abre o diálogo diretamente
                         Personagem personagem = personagens.get(0);
                         new EditarPersonagemDialog(this, personagemController, personagem).setVisible(true);
                     } else {
-                        // Se houver mais de um personagem, exibe uma lista para escolha
                         Personagem personagemSelecionado = selecionarPersonagem(personagens);
                         if (personagemSelecionado != null) {
                             new EditarPersonagemDialog(this, personagemController, personagemSelecionado).setVisible(true);
@@ -235,19 +221,15 @@ public class AdminPainelView extends JFrame {
             }
         });
 
-        
         deletarButton.addActionListener(e -> {
             String nome = JOptionPane.showInputDialog("Digite o nome do personagem a ser deletado:").toLowerCase();
             if (nome != null && !nome.trim().isEmpty()) {
                 List<Personagem> personagens = personagemController.buscarPersonagemPorNome(nome);
-
                 if (personagens != null && !personagens.isEmpty()) {
                     if (personagens.size() == 1) {
-                        // Se houver apenas um personagem, procede para exclusão direta
                         Personagem personagem = personagens.get(0);
                         confirmarEDeletarPersonagem(personagem);
                     } else {
-                        // Se houver mais de um personagem, exibe uma lista para escolha
                         Personagem personagemSelecionado = selecionarPersonagem(personagens);
                         if (personagemSelecionado != null) {
                             confirmarEDeletarPersonagem(personagemSelecionado);
@@ -290,7 +272,6 @@ public class AdminPainelView extends JFrame {
         }
     }
     
-    
     private Personagem selecionarPersonagem(List<Personagem> personagens) {
         String[] opcoes = personagens.stream()
                 .map(p -> p.getId() + " - " + p.getNome() + " (" + p.getTipo() + ")")
@@ -306,7 +287,6 @@ public class AdminPainelView extends JFrame {
                 opcoes[0]);
 
         if (escolha != null) {
-            // Extrai o ID do personagem da escolha e retorna o correspondente
             String idEscolhido = escolha.split(" - ")[0];
             return personagens.stream()
                     .filter(p -> p.getId().toString().equals(idEscolhido))
@@ -316,9 +296,7 @@ public class AdminPainelView extends JFrame {
         return null;
     }
     
-    //lista por tipo
     private void abrirDialogoEscolherTipo() {
-        // Lista de tipos disponíveis
         String[] tiposDisponiveis = {
             "artista_plastico", "artista_popular", "escritor", 
             "politico", "governante", "cientista", 
@@ -380,16 +358,157 @@ public class AdminPainelView extends JFrame {
 
         tabelaPersonagens.setModel(new javax.swing.table.DefaultTableModel(dados, colunas));
         tabelaPersonagens.getColumnModel().getColumn(4).setCellRenderer(new ImageRenderer());
-        tabelaPersonagens.setRowHeight(100);  
+        tabelaPersonagens.getColumnModel().getColumn(2).setCellRenderer(new TextAreaRenderer());
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tabelaPersonagens.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tabelaPersonagens.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+
+        tabelaPersonagens.setRowHeight(200);
     }
     
+    // Classe interna para o diálogo de adicionar personagem
+    private class AdicionarPersonagemDialog extends JDialog {
+
+        private JTextField nomeField;
+        private JTextField biografiaField;
+        private JComboBox<String> tipoComboBox;
+        private File imagemSelecionada;
+        private JLabel imagemPreviewLabel;
+
+        private static final String[] TIPOS_PERSONAGEM = {
+            "artista_plastico", "artista_popular", "escritor",
+            "politico", "governante", "cientista",
+            "militar", "ativista", "religioso",
+            "educador", "empresario", "explorador",
+            "heroi_folclorico"
+        };
+
+        public AdicionarPersonagemDialog(JFrame parent, PersonagemController personagemController) {
+            super(parent, "Adicionar Personagem", true);
+            setSize(500, 400);
+            setLocationRelativeTo(parent);
+            initUI();
+        }
+
+        private void initUI() {
+            setLayout(new GridLayout(5, 2));
+
+            JLabel nomeLabel = new JLabel("Nome:");
+            nomeField = new JTextField();
+
+            JLabel biografiaLabel = new JLabel("Biografia:");
+            biografiaField = new JTextField();
+
+            JLabel tipoLabel = new JLabel("Tipo:");
+            tipoComboBox = new JComboBox<>(TIPOS_PERSONAGEM);
+
+            imagemPreviewLabel = new JLabel();
+            imagemPreviewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            imagemPreviewLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            imagemPreviewLabel.setPreferredSize(new Dimension(100, 100)); // Tamanho da pré-visualização
+
+            JButton selecionarImagemButton = new JButton("Selecionar Imagem");
+            selecionarImagemButton.addActionListener(e -> selecionarImagem());
+
+            JButton salvarButton = new JButton("Salvar");
+            salvarButton.addActionListener(e -> salvarPersonagem());
+
+            add(nomeLabel);
+            add(nomeField);
+            add(biografiaLabel);
+            add(biografiaField);
+            add(tipoLabel);
+            add(tipoComboBox);
+            add(new JLabel("Pré-visualização:"));
+            add(imagemPreviewLabel);
+            add(selecionarImagemButton);
+            add(salvarButton);
+        }
+
+        private void selecionarImagem() {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+                    "Imagens (JPG, JPEG, PNG)", "jpg", "jpeg", "png"));
+
+            int resultado = fileChooser.showOpenDialog(this);
+
+            if (resultado == JFileChooser.APPROVE_OPTION) {
+                imagemSelecionada = fileChooser.getSelectedFile();
+                carregarImagemPreview(imagemSelecionada.getAbsolutePath());
+            }
+        }
+
+        private void carregarImagemPreview(String imagemUrl) {
+            try {
+                ImageIcon imagemIcon = new ImageIcon(imagemUrl);
+                Image imagem = imagemIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                imagemPreviewLabel.setIcon(new ImageIcon(imagem));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao carregar a imagem.",
+                        "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        private void salvarPersonagem() {
+            String nome = nomeField.getText().trim();
+            String biografia = biografiaField.getText().trim();
+            String tipo = (String) tipoComboBox.getSelectedItem();
+
+            if (nome.isEmpty() || biografia.isEmpty() || tipo == null) {
+                JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.",
+                        "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            try (InputStream imagemStream = imagemSelecionada != null ? new FileInputStream(imagemSelecionada) : null) {
+                String imagemNome = imagemSelecionada != null ? imagemSelecionada.getName() : "";
+
+                personagemController.adicionarPersonagem(nome, biografia, tipo, imagemStream, imagemNome);
+
+                JOptionPane.showMessageDialog(this, "Personagem adicionado com sucesso.");
+                dispose();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,
+                        "Erro ao adicionar personagem: " + e.getMessage(),
+                        "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    class TextAreaRenderer extends JTextArea implements TableCellRenderer {
+
+        public TextAreaRenderer() {
+            setLineWrap(true);
+            setWrapStyleWord(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText(value != null ? value.toString() : "");
+            setSize(table.getColumnModel().getColumn(column).getWidth(), getPreferredSize().height);
+
+            int preferredHeight = getPreferredSize().height;
+            int rowHeight = Math.max(preferredHeight, 200);
+
+            if (table.getRowHeight(row) != rowHeight) {
+                table.setRowHeight(row, rowHeight);
+            }
+
+            return this;
+        }
+    }
+
     private ImageIcon carregarImagem(String caminhoImagem) {
         if (caminhoImagem == null || caminhoImagem.isEmpty()) {
             return new ImageIcon("path/to/default_image.png"); 
         }
         try {
             ImageIcon imagemIcon = new ImageIcon(new URL(caminhoImagem));  
-            Image imagem = imagemIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            Image imagem = imagemIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
             return new ImageIcon(imagem);
         } catch (MalformedURLException e) {
             System.err.println("Erro ao carregar imagem: " + e.getMessage());
@@ -397,7 +516,6 @@ public class AdminPainelView extends JFrame {
         }
     }
 
-    
     class ImageRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(
@@ -408,6 +526,7 @@ public class AdminPainelView extends JFrame {
             return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         }
     }
+    
 
     private void sair() {
         dispose();
