@@ -303,7 +303,7 @@ MuseuVirtual/
 - [Hibernate ORM](https://hibernate.org/orm/)
 - [Firebase](https://firebase.google.com/)
 - [Jakarta](https://jakarta.ee/learn/docs/jakartaee-tutorial/current/index.html)
-- [Javax Swing GUI](https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html)
+- [Swing GUI](https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html)
 - [jBCrypt](https://www.javadoc.io/doc/org.mindrot/jbcrypt/0.4/index.html)
 - [Git](https://git-scm.com/downloads)
 - [GitHub](https://github.com/)
