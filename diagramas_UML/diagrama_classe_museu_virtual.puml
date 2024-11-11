@@ -8,26 +8,36 @@ class LoginView {
 }
 
 class AdminPainelView {
+    - usuarioController: UsuarioController
+    - personagemController: PersonagemController
     - tabelaUsuarios: JTable
     - tabelaPersonagens: JTable
     + criarPainelUsuarios(): JPanel
     + criarPainelPersonagens(): JPanel
-    + atualizarTabela(): void
+    + atualizarTabelaUsuarios(usuarios: List<Usuario>): void
+    + atualizarTabelaPersonagens(personagens: List<Personagem>): void
+    + abrirDialogoEscolherTipoUsuario(): void
+    + abrirDialogoEscolherTipo(): void
+    + confirmarEDeletarPersonagem(personagem: Personagem): void
+    + selecionarPersonagem(personagens: List<Personagem>): Personagem
 }
 
 class AlunoPainelView {
+    - personagemController: PersonagemController
     - tabelaPersonagens: JTable
     + criarPainelPersonagens(): JPanel
-    + atualizarTabelaPersonagens(): void
+    + atualizarTabelaPersonagens(personagens: List<Personagem>): void
+    + abrirDialogoEscolherTipo(): void
 }
 
 class AdicionarPersonagemDialog {
     - nomeField: JTextField
     - biografiaField: JTextField
     - tipoComboBox: JComboBox
-    - imagemUrlField: JTextField
+    - imagemPreviewLabel: JLabel
+    - imagemSelecionada: File
     + selecionarImagem(): void
-    + adicionarPersonagem(): void
+    + salvarPersonagem(): void
 }
 
 class EditarPersonagemDialog {
@@ -48,7 +58,7 @@ class EditarUsuarioDialog {
     - nomeField: JTextField
     - emailField: JTextField
     - senhaField: JPasswordField
-    - tipoUsuarioBox: JComboBox
+    - tipoUsuarioComboBox: JComboBox
     + salvarUsuario(): void
 }
 
@@ -207,6 +217,7 @@ class TipoUsuarioValidator {
 LoginView --> UsuarioController : "Dependência"
 LoginView --> AuthService : "Dependência"
 AdminPainelView --> UsuarioController : "Dependência"
+AdminPainelView --> PersonagemController : "Dependência"
 AlunoPainelView --> PersonagemController : "Dependência"
 AdicionarUsuarioDialog --> UsuarioController : "Dependência"
 EditarUsuarioDialog --> UsuarioController : "Dependência"
