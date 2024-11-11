@@ -54,14 +54,62 @@ class EditarUsuarioDialog {
 
 class UsuarioController {
     + listarTodosUsuarios(): List<Usuario>
+    + listarUsuariosPorTipo(tipoUsuario: String): List<Usuario>
+    + buscarUsuarioPorId(id: Long): Usuario
     + buscarUsuarioPorEmail(email: String): Usuario
     + adicionarUsuario(nome: String, email: String, senha: String, tipoUsuario: String): void
+    + atualizarUsuario(id: Long, novoNome: String, novoEmail: String, novaSenha: String, novoTipoUsuario: String): void
+    + deletarUsuario(id: Long): void
+    - validarEntradaObrigatoria(entrada: String, campo: String): String
+    - isEmail(email: String): boolean
+    - validarSenhaObrigatoria(senha: String, campo: String): String
+    - validarTipoUsuario(tipoUsuario: String): String
 }
 
 class PersonagemController {
     + listarTodosPersonagens(): List<Personagem>
+    + listarPersonagensPorTipo(tipo: String): List<Personagem>
+    + buscarPersonagemPorId(id: Long): Personagem
     + buscarPersonagemPorNome(nome: String): List<Personagem>
-    + adicionarPersonagem(nome: String, biografia: String, tipo: String, imagem: InputStream): void
+    + adicionarPersonagem(nome: String, biografia: String, tipo: String, imagemStream: InputStream, imagemNome: String): void
+    + atualizarPersonagem(id: Long, novoNome: String, biografia: String, tipo: String, imagemStream: InputStream, imagemNome: String): void
+    + deletarPersonagem(id: Long): void
+    - verificarPersonagemExistente(nome: String, tipo: String, idIgnorar: Long): boolean
+    - isFormatoValido(nomeArquivo: String): boolean
+    - salvarImagemSeForValida(imagemStream: InputStream, imagemNome: String): String
+    - validarEntradaObrigatoria(entrada: String, campo: String): String
+    - validarTipoPersonagem(tipo: String): String
+}
+
+class AuthService {
+    + autenticar(email: String, senha: String): boolean
+    + registrarUsuario(nome: String, email: String, senha: String, tipoUsuario: String): void
+    - usuarioDAO: UsuarioDAO
+}
+
+class FirebaseService {
+    + initializeFirebase(): void
+    + uploadImage(fileName: String, imageStream: InputStream): String
+    - dotenv: Dotenv
+}
+
+class HibernateUtil {
+    - sessionFactory: SessionFactory
+    + getSessionFactory(): SessionFactory
+    + shutdown(): void
+}
+
+class JPAUtils {
+    - emf: EntityManagerFactory
+    + getEntityManager(): EntityManager
+    + executeInsideTransaction(action: Consumer<EntityManager>): void
+    + shutdown(): void
+}
+
+class PasswordUtil {
+    + hashPassword(plainPassword: String): String
+    + checkPassword(plainPassword: String, hashedPassword: String): boolean
+    - WORKLOAD: int
 }
 
 abstract class InstanceDAO<T> {
@@ -74,15 +122,24 @@ abstract class InstanceDAO<T> {
 }
 
 class UsuarioDAO {
-    + save(usuario: Usuario): void
-    + findById(id: Long): Usuario
-    + findAll(): List<Usuario>
+    + saveUsuario(usuario: Usuario): void
+    + findUsuarioById(id: Long): Usuario
+    + findAllUsuarios(): List<Usuario>
+    + listarUsuariosPorTipo(tipoUsuario: String): List<Usuario>
+    + findByEmail(email: String): Usuario
+    + updateUsuario(usuario: Usuario): void
+    + deleteUsuario(id: Long): void
 }
 
 class PersonagemDAO {
-    + save(personagem: Personagem): void
-    + findById(id: Long): Personagem
-    + findAll(): List<Personagem>
+    + savePersonagem(personagem: Personagem): void
+    + findPersonagemById(id: Long): Personagem
+    + findAllPersonagens(): List<Personagem>
+    + listarPersonagensPorTipo(tipo: String): List<Personagem>
+    + buscarPersonagemPorNome(nome: String): List<Personagem>
+    + buscarPersonagemPorNomeETipo(nome: String, tipo: String): List<Personagem>
+    + updatePersonagem(personagem: Personagem): void
+    + deletePersonagem(id: Long): void
 }
 
 class Usuario {
@@ -91,6 +148,18 @@ class Usuario {
     - email: String
     - senha: String
     - tipoUsuario: String
+    + getId(): Long
+    + getNome(): String
+    + setNome(nome: String): void
+    + getEmail(): String
+    + setEmail(email: String): void
+    + getSenha(): String
+    + setSenha(senha: String): void
+    + getTipoUsuario(): String
+    + setTipoUsuario(tipoUsuario: String): void
+    + equals(Object o): boolean
+    + hashCode(): int
+    + toString(): String
 }
 
 class Personagem {
@@ -99,21 +168,66 @@ class Personagem {
     - biografia: String
     - tipo: String
     - imagemUrl: String
+    + getId(): Long
+    + getNome(): String
+    + setNome(nome: String): void
+    + getBiografia(): String
+    + setBiografia(biografia: String): void
+    + getTipo(): String
+    + setTipo(tipo: String): void
+    + getImagemUrl(): String
+    + setImagemUrl(imagemUrl: String)
+    + equals(Object o): boolean
+    + hashCode(): int
+    + toString(): String
+}
+
+annotation TipoPersonagem {
+    + message(): String
+    + groups(): Class<?>[]
+    + payload(): Class<? extends Payload>[]
+}
+
+class TipoPersonagemValidator {
+    + initialize(constraintAnnotation: TipoPersonagem): void
+    + isValid(value: String, context: ConstraintValidatorContext): boolean
+}
+
+annotation TipoUsuario {
+    + message(): String
+    + groups(): Class<?>[]
+    + payload(): Class<? extends Payload>[]
+}
+
+class TipoUsuarioValidator {
+    + initialize(constraintAnnotation: TipoUsuario): void
+    + isValid(value: String, context: ConstraintValidatorContext): boolean
 }
 
 LoginView --> UsuarioController : "Dependência"
+LoginView --> AuthService : "Dependência"
 AdminPainelView --> UsuarioController : "Dependência"
 AlunoPainelView --> PersonagemController : "Dependência"
 AdicionarUsuarioDialog --> UsuarioController : "Dependência"
 EditarUsuarioDialog --> UsuarioController : "Dependência"
 AdicionarPersonagemDialog --> PersonagemController : "Dependência"
+AdicionarPersonagemDialog --> FirebaseService : "Dependência"
 EditarPersonagemDialog --> PersonagemController : "Dependência"
 UsuarioController *-- UsuarioDAO : "Composição"
 PersonagemController *-- PersonagemDAO : "Composição"
+UsuarioController --> PasswordUtil : "Dependência"
+AuthService --> UsuarioDAO : "Dependência"
+AuthService --> PasswordUtil : "Dependência"
+FirebaseService --> Dotenv : "Dependência"
 InstanceDAO <|-- UsuarioDAO : "Extensão"
 InstanceDAO <|-- PersonagemDAO : "Extensão"
-UsuarioDAO o-- Usuario  : "Agregação"
+HibernateUtil --> SessionFactory : "Dependência"
+JPAUtils --> EntityManagerFactory : "Dependência"
+TipoPersonagem <|-- TipoPersonagemValidator : "Validação"
+TipoUsuario <|-- TipoUsuarioValidator : "Validação"
+UsuarioDAO o-- Usuario : "Agregação"
 PersonagemDAO o-- Personagem : "Agregação"
-
+Usuario --> TipoUsuario : "Validação"
+Personagem --> TipoPersonagem : "Validação"
 
 @enduml
